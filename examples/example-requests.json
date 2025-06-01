@@ -1,0 +1,67 @@
+{
+  "requests": {
+    "list_tools": {
+      "jsonrpc": "2.0",
+      "id": 1,
+      "method": "tools/list",
+      "params": {}
+    },
+    "get_user_info": {
+      "jsonrpc": "2.0",
+      "id": 2,
+      "method": "tools/call",
+      "params": {
+        "name": "get_me",
+        "arguments": {}
+      }
+    },
+    "list_repositories": {
+      "jsonrpc": "2.0",
+      "id": 3,
+      "method": "tools/call",
+      "params": {
+        "name": "search_repositories",
+        "arguments": {
+          "query": "user:octocat",
+          "per_page": 5
+        }
+      }
+    },
+    "get_repository_info": {
+      "jsonrpc": "2.0",
+      "id": 4,
+      "method": "tools/call",
+      "params": {
+        "name": "get_file_contents",
+        "arguments": {
+          "owner": "octocat",
+          "repo": "Hello-World",
+          "path": "README"
+        }
+      }
+    },
+    "list_issues": {
+      "jsonrpc": "2.0",
+      "id": 5,
+      "method": "tools/call",
+      "params": {
+        "name": "list_issues",
+        "arguments": {
+          "owner": "octocat",
+          "repo": "Hello-World",
+          "state": "open",
+          "per_page": 5
+        }
+      }
+    }
+  },
+  "usage": {
+    "description": "Example MCP requests for the GitHub MCP Server",
+    "how_to_use": [
+      "Copy any request from the 'requests' object above",
+      "Send it as a POST request to http://localhost:3000/mcp",
+      "Make sure to set Content-Type: application/json header"
+    ],
+    "curl_example": "curl -X POST http://localhost:3000/mcp -H 'Content-Type: application/json' -d '{...request_json...}'"
+  }
+}
