@@ -14,8 +14,6 @@ services:
       - GITHUB_DYNAMIC_TOOLSETS=${GITHUB_DYNAMIC_TOOLSETS:-0}
       - PORT=3000
     restart: unless-stopped
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - mcp-network
 
