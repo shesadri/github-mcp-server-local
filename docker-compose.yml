@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  github-mcp-server:
+    image: ghcr.io/github/github-mcp-server:latest
+    container_name: github-mcp-server
+    environment:
+      - GITHUB_PERSONAL_ACCESS_TOKEN=${GITHUB_PERSONAL_ACCESS_TOKEN}
+      - GITHUB_TOOLSETS=${GITHUB_TOOLSETS:-all}
+      - GITHUB_DYNAMIC_TOOLSETS=${GITHUB_DYNAMIC_TOOLSETS:-0}
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    networks:
+      - mcp-network
+
+  mcp-http-proxy:
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+    container_name: mcp-http-proxy
+    ports:
+      - "3000:3000"
+    depends_on:
+      - github-mcp-server
+    environment:
+      - MCP_SERVER_HOST=github-mcp-server
+      - PORT=3000
+    restart: unless-stopped
+    networks:
+      - mcp-network
+
+networks:
+  mcp-network:
+    driver: bridge
+
+volumes:
+  mcp-data:
+    driver: local
